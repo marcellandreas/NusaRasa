@@ -51,8 +51,8 @@ const TestimonialCard = ({
     <div className="flex items-center gap-4 px-5 py-4 border-slate-900/10 border-b">
       <img className="h-12 w-12 rounded-full" src={image} alt={name} />
       <div>
-        <h1 className="text-lg font-medium text-gray-800">{name}</h1>
-        <p className={textColor}>{role}</p>
+        <h4>{name}</h4>
+        <p>{role}</p>
       </div>
     </div>
     <div className="p-5 pb-7">
@@ -75,7 +75,7 @@ const Testimonials = () => {
   return (
     <section className="max-padd-container py-20 xl:py-28 bg-white">
       <Title title1="What" title2="People Says" titleStyles="pb-10" />
-      <div className="flex flex-wrap items-center justify-center gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
         {testimonialsData.map((testimonial) => (
           <TestimonialCard key={testimonial.id} {...testimonial} />
         ))}
