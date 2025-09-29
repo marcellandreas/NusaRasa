@@ -2,11 +2,42 @@ import React, { useEffect, useState } from "react";
 import { assets } from "../assets/data";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  useClerk,
+  UserButton,
+} from "@clerk/clerk-react";
+import { useAppContext } from "../context/AppContext";
 
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
+  const { openSignIn } = useClerk();
+  const { navigate, user } = useAppContext();
   const toggleMenu = () => {
     setMenuOpened((prev) => !prev);
+  };
+
+  const OrderIcon = () => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-receipt"
+      >
+        <path d="M4 2h16v20l-2-2-2 2-2-2-2 2-2-2-2 2-2-2-2 2z" />
+        <path d="M8 6h8" />
+        <path d="M8 10h8" />
+      </svg>
+    );
   };
 
   useEffect(() => {
@@ -83,10 +114,34 @@ const Header = () => {
           </div>
           {/* user profile */}
           <div>
-            <button className=" btn-solid flexCenter gap-2">
-              Login
-              <img src={assets.user} alt="" className=" invert w-5" />
-            </button>
+            {user ? (
+              <UserButton
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: {
+                      width: "42px",
+                      height: "42px",
+                    },
+                  },
+                }}
+              >
+                <UserButton.MenuItems>
+                  <UserButton.Action
+                    label="My Orders"
+                    labelIcon={<OrderIcon />}
+                    onClick={() => navigate("/my-orders")}
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
+            ) : (
+              <button
+                onClick={openSignIn}
+                className=" btn-solid flexCenter gap-2"
+              >
+                Login
+                <img src={assets.user} alt="" className=" invert w-5" />
+              </button>
+            )}
           </div>
         </div>
       </div>
