@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { assets } from "../assets/data";
+import { assets } from "../../assets/data";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  useClerk,
-  UserButton,
-} from "@clerk/clerk-react";
-import { useAppContext } from "../context/AppContext";
+import { useClerk, UserButton } from "@clerk/clerk-react";
+import { useAppContext } from "../../context/AppContext";
 
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);

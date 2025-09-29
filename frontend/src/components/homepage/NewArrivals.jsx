@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Title from "./ui/Title";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 
 import { Autoplay } from "swiper/modules";
-import Item from "./Item";
-import { useAppContext } from "../context/AppContext";
+import Item from "../Item";
+import Title from "../ui/Title";
+import { useAppContext } from "../../context/AppContext";
 
 const NewArrivals = () => {
   const [NewArrivals, setNewArrivals] = useState([]);
@@ -18,6 +18,7 @@ const NewArrivals = () => {
     const data = products.filter((item) => item.inStock).slice(0, 10);
     setNewArrivals(data);
   }, [products]);
+
   return (
     <section className="max-padd-container py-22 xl:py-28 bg-white">
       <Title title1={"New"} title2={"Arrivals"} titleStyles={"pb-10"} />

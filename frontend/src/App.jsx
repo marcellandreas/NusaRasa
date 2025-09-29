@@ -9,8 +9,7 @@ import {
   Menu,
   MyOrders,
 } from "./pages";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
+import { Footer, Header } from "./components/navigation";
 
 const App = () => {
   return (

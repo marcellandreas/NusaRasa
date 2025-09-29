@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Title from "./ui/Title";
-import Item from "./Item";
-import { useAppContext } from "../context/AppContext";
+import Title from "../ui/Title";
+import Item from "../Item";
+import { useAppContext } from "../../context/AppContext";
 
 import "swiper/css";
 

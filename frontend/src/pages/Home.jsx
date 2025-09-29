@@ -1,9 +1,11 @@
 import React from "react";
-import Hero from "../components/Hero";
-import NewArrivals from "../components/NewArrivals";
-import About from "../components/About";
-import PopularProduct from "../components/PopularProduct";
-import Testimonials from "../components/Testimonials";
+import {
+  About,
+  Hero,
+  NewArrivals,
+  PopularProduct,
+  Testimonials,
+} from "../components/homepage";
 
 const Home = () => {
   return (

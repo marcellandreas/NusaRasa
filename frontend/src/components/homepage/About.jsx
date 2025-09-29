@@ -1,6 +1,6 @@
 import React from "react";
-import Title from "./ui/Title";
-import { assets } from "../assets/data";
+import Title from "../ui/Title";
+import { assets } from "../../assets/data";
 
 const About = () => {
   return (
