@@ -12,7 +12,6 @@ export const AppContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [method, SetMethod] = useState("COD");
 
-  console.log("ini konteks", cartItems);
   const currency = import.meta.env.VITE_CURRENCY;
   const delivery_charges = 10;
   const navigate = useNavigate();
@@ -24,12 +23,10 @@ export const AppContextProvider = ({ children }) => {
   };
 
   const addToCart = (itemId, size) => {
-    console.log("addtocart", itemId, size);
     if (!size) return toast.error("Please select a size first");
     let cartData = structuredClone(cartItems);
     cartData[itemId] = cartData[itemId] || {};
     cartData[itemId][size] = (cartData[itemId][size] || 0) + 1;
-    console.log("apa yang terjadi ?", cartData);
     setCartItems(cartData);
   };
 
