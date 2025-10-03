@@ -8,7 +8,7 @@ import { useAppContext } from "../../context/AppContext";
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const { openSignIn } = useClerk();
-  const { navigate, user } = useAppContext();
+  const { navigate, user, getCartCount } = useAppContext();
   const toggleMenu = () => {
     setMenuOpened((prev) => !prev);
   };
@@ -90,20 +90,24 @@ const Header = () => {
               onClick={toggleMenu}
               src={assets.menuClose}
               alt=""
+              width={29}
               className={`absolute inset-0 lg:hidden cursor-pointer transition-opacity duration-700 ${
                 menuOpened ? "opacity-100" : " opacity-0"
               } `}
             />
           </div>
           {/* cart */}
-          <div className=" relative cursor-pointer">
+          <div
+            onClick={() => navigate("/cart")}
+            className=" relative cursor-pointer"
+          >
             <img
               src={assets.cartAdded}
               alt=""
               className=" min-w-11 bg-white rounded-full p-2"
             />
             <label className=" absolute bottom-10 right-1 text-xs font-bold bg-solid text-white flexCenter rounded-full w-9">
-              0
+              {getCartCount()}
             </label>
           </div>
           {/* user profile */}
