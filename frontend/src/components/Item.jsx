@@ -4,7 +4,7 @@ import { useAppContext } from "../context/AppContext";
 
 const Item = ({ product }) => {
   const [size, setSize] = useState(product.sizes[0]);
-  const { currency } = useAppContext();
+  const { currency, addToCart } = useAppContext();
 
   return (
     <section className=" relative mt-24 group">
@@ -77,7 +77,10 @@ const Item = ({ product }) => {
             </div>
           </div>
           <div className=" flex flex-col gap-1">
-            <button className=" btn-solid rounded p-3">
+            <button
+              onClick={() => addToCart(product._id, size)}
+              className=" btn-solid rounded p-3"
+            >
               <img src={assets.cartAdd} alt="" width={20} />
             </button>
           </div>
