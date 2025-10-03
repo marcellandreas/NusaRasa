@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { assets } from "../../assets/data";
 import Navbar from "./Navbar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useClerk, UserButton } from "@clerk/clerk-react";
 import { useAppContext } from "../../context/AppContext";
 
@@ -9,6 +9,7 @@ const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const { openSignIn } = useClerk();
   const { navigate, user, getCartCount } = useAppContext();
+  const isHomePage = useLocation().pathname.endsWith("/");
   const toggleMenu = () => {
     setMenuOpened((prev) => !prev);
   };
@@ -46,7 +47,11 @@ const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <header className=" absolute top-0 left-0 right-0 z-50 py-3">
+    <header
+      className={`absolute top-0 left-0 right-0 z-50 py-3 ${
+        !isHomePage && "bg-white"
+      }`}
+    >
       {/* container */}
       <div className=" max-padd-container flexBetween">
         {/* Logo */}
