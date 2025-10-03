@@ -10,11 +10,13 @@ import {
   MyOrders,
 } from "./pages";
 import { Footer, Header } from "./components/navigation";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
     <main className=" overflow-x-hidden text-textColor">
       <Header />
+      <Toaster position="bottom-right" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
