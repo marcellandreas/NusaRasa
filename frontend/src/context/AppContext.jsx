@@ -12,6 +12,8 @@ export const AppContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [method, SetMethod] = useState("COD");
 
+  const [isOwner, setIsOwner] = useState(true);
+
   const currency = import.meta.env.VITE_CURRENCY;
   const delivery_charges = 10;
   const navigate = useNavigate();
@@ -81,6 +83,8 @@ export const AppContextProvider = ({ children }) => {
     getCartAmount,
     method,
     SetMethod,
+    isOwner,
+    setIsOwner,
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
