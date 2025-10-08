@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(clerkMiddleware());
 
 // api to listen clerk webhooks
-app.use("/api/clerk", clerkWebhooks);
+app.post("/api/clerk", clerkWebhooks);
 
 // route endpoint
 app.get("/", (req, res) => res.send("Api Successfully Connected"));
