@@ -51,6 +51,7 @@ const clerkWebhooks = async (req, res) => {
     }
 
     res.json({ success: true, message: "Webhooks Recieved" });
+    console.log("webhooks bisa ");
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
