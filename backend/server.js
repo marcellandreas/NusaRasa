@@ -4,6 +4,7 @@ import "dotenv/config";
 import connectDB from "./config/mongodb.js";
 import { clerkMiddleware } from "@clerk/express";
 import clerkWebhooks from "./controllers/ClerkWebhooks.js";
+import userRouter from "./routes/userRoute.js";
 
 const port = process.env.PORT || 3000;
 
@@ -23,6 +24,9 @@ app.post("/api/clerk", clerkWebhooks);
 
 // route endpoint
 app.get("/", (req, res) => res.send("Api Successfully Connected"));
+
+// define api routes
+app.use("api/user", userRouter);
 
 // start
 app.listen(port, () =>
