@@ -1,0 +1,130 @@
+import Stripe from "stripe";
+import Order from "../models/Order.js";
+import Product from "../models/Product.js";
+import User from "../models/User.js";
+
+// global variabels for payment
+const currency = "usd";
+const delivery_charges = 10; // in dollars
+const taxPercentage = 0.02; // 2%
+
+// PLACE ORDER USING COD [POST '/COD']
+export const placeOrderCOD = async (req, res) => {
+  try {
+    const { items, address } = req.border;
+    const { userId } = req.auth();
+
+    if (!items || items.length == 0) {
+      return req.json({
+        success: false,
+        message: "Please add Products first yaa!!!",
+      });
+    }
+
+    // calculate amount using items
+    let subtotal = 0;
+    for (const item in items) {
+      const product = await Product.findById(item.product);
+      if (!product) {
+        return req.json({
+          success: false,
+          message: "Product not found",
+        });
+      }
+
+      const unitPrice = product.price[item.size]; // pick correct size
+      if (!unitPrice) {
+        return req.json({
+          success: false,
+          message: "Invalid size selected",
+        });
+      }
+
+      subtotal += unitPrice + item.quantity;
+    }
+
+    // calculate total amount by adding tax and delivery charges
+
+    const taxAmount = subtotal * taxPercentage;
+    const totalAmount = subtotal + taxAmount + delivery_charges;
+
+    // create order in db
+    const order = await Order.create({
+      userId,
+      items,
+      amount: totalAmount,
+      address,
+      paymentMethod: "COD",
+    });
+
+    //clear user for after placing order
+    await User.findByIdAndUpdate(userId, { cartData: {} });
+
+    res.json({ success: true, message: "Order placed" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+// PLACE ORDER USING Stripe [POST '/stripe']
+export const placeOrderStripe = async (req, res) => {
+  try {
+    res.json({ success: true, message: "Order placed" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// ALL ORDERS DATA FOR USER [GET '/']
+export const userOrders = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+    const orders = await Order.find({
+      userId,
+      $or: [{ paymentMethod: "COD" }, { isPaid: true }],
+    })
+      .populate("items.product address")
+      .sort({ createdAt: -1 });
+    res.json({ success: true, orders });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// ALL ORDERS DATA FOR ADMIN [POST '/status']
+export const allOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({
+      $or: [{ paymentMethod: "COD" }, { isPaid: true }],
+    })
+      .populate("items.product address")
+      .sort({ createdAt: -1 });
+
+    const totalOders = orders.length;
+    const totalRevenue = orders.reduce(
+      (acc, o) => acc + (o.isPaid ? o.amount : 0),
+      0
+    );
+    res.json({
+      success: true,
+      dashboardData: { totalOders, totalRevenue, orders },
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// update order status for admin [POST '/status']
+export const updateStatus = async (req, res) => {
+  try {
+    const { orderId, status } = req.body;
+    await Order.findByIdAndUpdate(orderId, { status });
+    res.json({ success: true, message: "Order Status Updated" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
