@@ -30,8 +30,8 @@ export const AppContextProvider = ({ children }) => {
       const { data } = await axios.get("/api/user", {
         headers: { Authorization: `Bearer ${await getToken()}` },
       });
-      console.log(data, "apakah data terbaca");
       if (data.success) {
+        setIsOwner(data.role === "owner");
         setCartItems(data.cartData || {});
       } else {
         // Retry fetch user details after 5 sec
@@ -45,7 +45,7 @@ export const AppContextProvider = ({ children }) => {
   };
 
   // Fetch all products
-  const fecthProducts = () => {
+  const fecthProducts = async () => {
     setProducts(dummyProducts);
   };
 
