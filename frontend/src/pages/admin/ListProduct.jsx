@@ -1,8 +1,31 @@
 import React from "react";
 import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 const ListProduct = () => {
-  const { products, currency, fetchProducts } = useAppContext();
+  const { products, currency, fetchProducts, axios, getToken } =
+    useAppContext();
+
+  const toggleStock = async (productId, inStock) => {
+    try {
+      const { data } = await axios.post(
+        "/api/products/toggle-stock",
+        { productId, inStock },
+        {
+          headers: { Authorization: `Bearer ${await getToken()}` },
+        }
+      );
+      if (data.success) {
+        fetchProducts();
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error);
+      toast.error(error);
+    }
+  };
 
   return (
     <div className="md:px-8 py-6 xl:py-8 m-1.5 sm:m-3 h-[97vh] overflow-y-scroll w-full lg:w-11/12 bg-primary shadow rounded-xl">
@@ -36,6 +59,7 @@ const ListProduct = () => {
             <div>
               <label className=" relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
                 <input
+                  onClick={() => toggleStock(product._id, !product.inStock)}
                   type="checkbox"
                   className=" sr-only peer"
                   defaultChecked={product.inStock}

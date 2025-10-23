@@ -45,8 +45,18 @@ export const AppContextProvider = ({ children }) => {
   };
 
   // Fetch all products
-  const fecthProducts = async () => {
-    setProducts(dummyProducts);
+  const fetchProducts = async () => {
+    try {
+      const { data } = await axios.get("/api/products");
+      if (data.success) {
+        setProducts(data.products);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
   };
 
   const addToCart = (itemId, size) => {
@@ -95,13 +105,13 @@ export const AppContextProvider = ({ children }) => {
   }, [user]);
 
   useEffect(() => {
-    fecthProducts();
+    fetchProducts();
   }, []);
 
   const value = {
     user,
     products,
-    fecthProducts,
+    fetchProducts,
     currency,
     navigate,
     delivery_charges,
