@@ -16,8 +16,6 @@ export const AppContextProvider = ({ children }) => {
 
   const [isOwner, setIsOwner] = useState(false);
 
-  console.log(isOwner, "app context")
-
   const currency = import.meta.env.VITE_CURRENCY;
   const delivery_charges = 10;
   const navigate = useNavigate();
@@ -27,31 +25,24 @@ export const AppContextProvider = ({ children }) => {
 
   // get the user profile
 
- 
-const getUser = async () => {
-  try {
-    const { data } = await axios.get("/api/user", {
-      headers: { Authorization: `Bearer ${await getToken()}` },
-    });
-    console.log(data, "apakah data terbaca")
-    if (data.success) {
-      setIsOwner(data.role === "owner");
-      console.log(isOwner, "after login");
-      setCartItems(data.cartData || {});
-      console.log("data success apakah bisa?");
-    } else {
-      console.log("else dari data success");
-      // Retry fetch user details after 5 sec
-      setTimeout(() => {
-        getUser();
-      }, 5000);
+  const getUser = async () => {
+    try {
+      const { data } = await axios.get("/api/user", {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      console.log(data, "apakah data terbaca");
+      if (data.success) {
+        setCartItems(data.cartData || {});
+      } else {
+        // Retry fetch user details after 5 sec
+        setTimeout(() => {
+          getUser();
+        }, 5000);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
-  } catch (error) {
-    console.log("context error");
-    toast.error(error.message);
-  }
-};
-
+  };
 
   // Fetch all products
   const fecthProducts = () => {
@@ -127,7 +118,7 @@ const getUser = async () => {
     isOwner,
     setIsOwner,
     axios,
-    getToken
+    getToken,
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
