@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../models/User.js";
 
 // ADDING TO CART  ['POST' | '/ADD']
 export const addToCart = async (req, res) => {

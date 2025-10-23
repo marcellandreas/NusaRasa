@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { dummyProducts } from "../assets/data";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
@@ -12,14 +14,46 @@ export const AppContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [method, SetMethod] = useState("COD");
 
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner, setIsOwner] = useState(false);
+
+  console.log(isOwner, "app context")
 
   const currency = import.meta.env.VITE_CURRENCY;
   const delivery_charges = 10;
   const navigate = useNavigate();
   // clerk
   const { user } = useUser();
+  const { getToken } = useAuth();
 
+  // get the user profile
+
+ 
+const getUser = async () => {
+  try {
+    const { data } = await axios.get("/api/user", {
+      headers: { Authorization: `Bearer ${await getToken()}` },
+    });
+    console.log(data, "apakah data terbaca")
+    if (data.success) {
+      setIsOwner(data.role === "owner");
+      console.log(isOwner, "after login");
+      setCartItems(data.cartData || {});
+      console.log("data success apakah bisa?");
+    } else {
+      console.log("else dari data success");
+      // Retry fetch user details after 5 sec
+      setTimeout(() => {
+        getUser();
+      }, 5000);
+    }
+  } catch (error) {
+    console.log("context error");
+    toast.error(error.message);
+  }
+};
+
+
+  // Fetch all products
   const fecthProducts = () => {
     setProducts(dummyProducts);
   };
@@ -64,8 +98,15 @@ export const AppContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (user) {
+      getUser();
+    }
+  }, [user]);
+
+  useEffect(() => {
     fecthProducts();
   }, []);
+
   const value = {
     user,
     products,
@@ -85,6 +126,8 @@ export const AppContextProvider = ({ children }) => {
     SetMethod,
     isOwner,
     setIsOwner,
+    axios,
+    getToken
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

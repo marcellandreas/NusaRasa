@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import User from "../models/User.js";
+import Stripe from "stripe";
 
 // global variabels for payment
 const currency = "usd";
@@ -14,7 +15,7 @@ export const placeOrderCOD = async (req, res) => {
     const { items, address } = req.border;
     const { userId } = req.auth();
 
-    if (!items || items.length == 0) {
+    if (!items || items.length === 0) {
       return req.json({
         success: false,
         message: "Please add Products first yaa!!!",

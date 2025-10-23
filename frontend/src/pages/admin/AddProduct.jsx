@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { assets } from "../../assets/data";
+import {useAppContext} from '../../context/AppContext'
+import toast from 'react-hot-toast'
 
 const AddProduct = () => {
   const [images, setImages] = useState({
@@ -65,6 +67,26 @@ const AddProduct = () => {
     "Bananas",
   ];
 
+  const addPrizeAdd = () => {
+    if(!newSize || !newPrice){
+      toast.error("Please enter size and price")
+      return
+    }
+    if(sizePrices.some((sp) => sp.size === newSize)){
+      toast.error("Size Already exists")
+      return
+    }
+    setSizePrices([...sizePrices, {size: newSize, price: parseFloat(newPrice)}])
+    setNewPrice("")
+    setNewSize("")
+  }
+
+  const removeSizePrice = (size) => {
+
+  }
+
+
+
   return (
     <div className=" md:px-8 py-6 xl:py-8 m-1.5 sm:m-3 h-[97vh] overflow-y-scroll w-full lg:w-11/12 bg-primary shadow rounded-xl">
       <form className="flex flex-col gap-y-3.5 px-2 text-sm w-full lg:w-11/12">
@@ -129,19 +151,20 @@ const AddProduct = () => {
         <div className="w-full mt-4">
           <h5>Size and Prices</h5>
           <div className="flex gap-4 mt-2">
-            <input
+            <input onChange={(e) => setNewSize(e.target.value)}
               type="text"
               placeholder="Size (e.g. S,M,L,XL,H,F)"
               value={newSize}
               className=" px-3 py-1.5 ring-1 ring-slate-900/10 rounded-lg bg-white text-gray-600 text-sm font-medium mt-1 w-full"
             />
-            <input
+            <input onChange={(e) => setNewPrice(e.target.value)}
               type="number"
               placeholder="Price"
               value={newPrice}
               className=" px-3 py-1.5 ring-1 ring-slate-900/10 rounded-lg bg-white text-gray-600 text-sm font-medium mt-1 w-full"
             />
             <button
+            onClick={addPrizeAdd}
               type="button"
               className=" btn-solid font-semibold pb-1.5 rounded-lg flexCenter"
             >
