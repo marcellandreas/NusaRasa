@@ -35,7 +35,7 @@ app.get("/", (req, res) => res.send("Api Successfully Connected"));
 
 // define api routes
 app.use("/api/user", userRouter);
-app.use("/api/product", productRouter);
+app.use("/api/products", productRouter);
 app.use("/api/address", addressRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/orders", orderRouter);

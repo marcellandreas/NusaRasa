@@ -4,6 +4,8 @@ import Product from "../models/Product.js";
 // controller func for creating product [post]
 export const createProduct = async (req, res) => {
   try {
+    console.log(req.body);
+    console.log(req.files);
     const productData = JSON.parse(req.body.productData);
     const images = req.files;
 

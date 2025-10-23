@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { assets } from "../../assets/data";
-import {useAppContext} from '../../context/AppContext'
-import toast from 'react-hot-toast'
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
+  const { currency, axios, getToken } = useAppContext();
   const [images, setImages] = useState({
     1: null,
     2: null,
     3: null,
     4: null,
   });
+
+  console.log("images", images);
 
   const [inputs, setInputs] = useState({
     title: "",
@@ -68,28 +71,117 @@ const AddProduct = () => {
   ];
 
   const addPrizeAdd = () => {
-    if(!newSize || !newPrice){
-      toast.error("Please enter size and price")
-      return
+    if (!newSize || !newPrice) {
+      toast.error("Please enter size and price");
+      return;
     }
-    if(sizePrices.some((sp) => sp.size === newSize)){
-      toast.error("Size Already exists")
-      return
+    if (sizePrices.some((sp) => sp.size === newSize)) {
+      toast.error("Size Already exists");
+      return;
     }
-    setSizePrices([...sizePrices, {size: newSize, price: parseFloat(newPrice)}])
-    setNewPrice("")
-    setNewSize("")
-  }
+    setSizePrices([
+      ...sizePrices,
+      { size: newSize, price: parseFloat(newPrice) },
+    ]);
+    setNewPrice("");
+    setNewSize("");
+  };
 
   const removeSizePrice = (size) => {
+    setSizePrices(sizePrices.filter((sp) => sp.size !== size));
+  };
 
-  }
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (
+      !inputs.title ||
+      !inputs.category ||
+      !inputs.description ||
+      !inputs.type
+    ) {
+      toast.error("Please fill all required fields");
+      return;
+    }
+    if (sizePrices.length === 0) {
+      toast.error("Please add at least one size and price");
+      return;
+    }
 
+    const hasImage = Object.values(images).some((img) => img !== null);
+    if (!hasImage) {
+      toast.error("Please Upload at least one imagess");
+      return;
+    }
 
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+      const prices = {};
+      const sizes = [];
+      sizePrices.forEach((sp) => {
+        prices[sp.price] = sp.price;
+        sizes.push(sp.size);
+      });
+
+      const productData = {
+        title: inputs.title,
+        description: inputs.description,
+        category: inputs.category,
+        type: inputs.type,
+        popular: inputs.popular,
+        price: prices,
+        sizes: sizes,
+      };
+
+      formData.append("productData", JSON.stringify(productData));
+
+      // adding image  to formData
+      Object.keys(images).forEach((key) => {
+        if (images[key]) {
+          console.log("aaa");
+          console.log("iyalah", images[key]);
+          formData.append("images", images[key]);
+        }
+      });
+
+      const { data } = await axios.post("/api/products", formData, {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (data.success) {
+        toast.success(data.messages);
+        // reset form after success
+        setInputs({
+          title: "",
+          description: "",
+          popular: false,
+          category: "",
+          type: "",
+        });
+
+        setNewPrice([]);
+        setImages({ 1: null, 2: null, 3: null, 4: null });
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className=" md:px-8 py-6 xl:py-8 m-1.5 sm:m-3 h-[97vh] overflow-y-scroll w-full lg:w-11/12 bg-primary shadow rounded-xl">
-      <form className="flex flex-col gap-y-3.5 px-2 text-sm w-full lg:w-11/12">
+      <form
+        onSubmit={onSubmitHandler}
+        className="flex flex-col gap-y-3.5 px-2 text-sm w-full lg:w-11/12"
+      >
         <div className="w-full">
           <h5>Product Name</h5>
           <input
@@ -151,20 +243,22 @@ const AddProduct = () => {
         <div className="w-full mt-4">
           <h5>Size and Prices</h5>
           <div className="flex gap-4 mt-2">
-            <input onChange={(e) => setNewSize(e.target.value)}
+            <input
+              onChange={(e) => setNewSize(e.target.value)}
               type="text"
               placeholder="Size (e.g. S,M,L,XL,H,F)"
               value={newSize}
               className=" px-3 py-1.5 ring-1 ring-slate-900/10 rounded-lg bg-white text-gray-600 text-sm font-medium mt-1 w-full"
             />
-            <input onChange={(e) => setNewPrice(e.target.value)}
+            <input
+              onChange={(e) => setNewPrice(e.target.value)}
               type="number"
               placeholder="Price"
               value={newPrice}
               className=" px-3 py-1.5 ring-1 ring-slate-900/10 rounded-lg bg-white text-gray-600 text-sm font-medium mt-1 w-full"
             />
             <button
-            onClick={addPrizeAdd}
+              onClick={addPrizeAdd}
               type="button"
               className=" btn-solid font-semibold pb-1.5 rounded-lg flexCenter"
             >
@@ -173,11 +267,18 @@ const AddProduct = () => {
           </div>
           <div className=" mt-2">
             {sizePrices.map((sp, index) => (
-              <div key={index}>
-                <span>
-                  {sp.size}: ${sp.price}
-                </span>
-                <button type="button" className=" text-red-600">
+              <div key={index} className="flexStart gap-2">
+                <h4 className=" ">
+                  {sp.size}: {currency}
+                  {sp.price}
+                </h4>
+                <button
+                  onClick={() => {
+                    removeSizePrice(sp.size);
+                  }}
+                  type="button"
+                  className=" text-red-600 ml-2 cursor-pointer font-bold"
+                >
                   Remove
                 </button>
               </div>
@@ -185,10 +286,10 @@ const AddProduct = () => {
           </div>
           {/* images */}
           <div className="flex gap-2 mt-2">
-            {Object.keys(images).map((key) => (
+            {Object.keys(images).map((key, i) => (
               <label
                 htmlFor={`productImage${key}`}
-                key={key}
+                key={i}
                 className=" ring-1 ring-slate-900/10 overflow-hidden rounded-lg"
               >
                 <input
