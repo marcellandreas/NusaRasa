@@ -9,12 +9,9 @@ const Cart = () => {
     useAppContext();
   const [cartData, setCartData] = useState([]);
 
-  console.log("cart dtaa", products);
-
   useEffect(() => {
     if (products.length > 0) {
       const tempData = [];
-      console.log(tempData, "temp");
       for (const itemId in cartItems) {
         for (const size in cartItems[itemId]) {
           if (cartItems[itemId][size] > 0) {

@@ -14,7 +14,6 @@ const PopularProduct = () => {
       .filter((item) => item.popular && item.inStock)
       .slice(0, 5);
 
-    console.log(data);
     setPopularProduct(data);
   }, [products]);
 

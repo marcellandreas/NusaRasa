@@ -12,8 +12,6 @@ const AddProduct = () => {
     4: null,
   });
 
-  console.log("images", images);
-
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
@@ -139,8 +137,6 @@ const AddProduct = () => {
       // adding image  to formData
       Object.keys(images).forEach((key) => {
         if (images[key]) {
-          console.log("aaa");
-          console.log("iyalah", images[key]);
           formData.append("images", images[key]);
         }
       });
@@ -169,7 +165,6 @@ const AddProduct = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     } finally {
       setLoading(false);

@@ -20,8 +20,6 @@ const Dashboard = () => {
     }
   }, [user]);
 
-  console.log(dashboardData.orders);
-
   return (
     <div className=" md:px-8 py-6 xl:pl-8 m-1 sm:m-3 h-[97vh] overflow-y-scroll w-full lg:w-11/12 bg-primary shadow rounded-xl">
       <div className=" grid grid-cols-2 gap-4">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import {
   AddressForm,
@@ -15,11 +15,8 @@ import SideBar from "./components/owner/SideBar";
 import Dashboard from "./pages/admin/Dashboard";
 import ListProduct from "./pages/admin/ListProduct";
 import AddProduct from "./pages/admin/AddProduct";
-import { useAppContext } from "./context/AppContext";
 
 const App = () => {
-  // const { isOwner } = useAppContext();
-
   const isOwnerPath = useLocation().pathname.includes("owner");
   return (
     <main className=" overflow-x-hidden text-textColor">

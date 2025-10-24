@@ -6,8 +6,6 @@ const ListProduct = () => {
   const { products, currency, fetchProducts, axios, getToken } =
     useAppContext();
 
-  console.log(products);
-
   const toggleStock = async (productId, inStock) => {
     try {
       const { data } = await axios.post(

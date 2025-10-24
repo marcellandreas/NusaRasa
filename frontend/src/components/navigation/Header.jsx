@@ -8,13 +8,11 @@ import { useAppContext } from "../../context/AppContext";
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const { openSignIn } = useClerk();
-  const { navigate, user, getCartCount, getToken, isOwner} = useAppContext();
+  const { navigate, user, getCartCount, getToken, isOwner } = useAppContext();
   const isHomePage = useLocation().pathname.endsWith("/");
   const toggleMenu = () => {
     setMenuOpened((prev) => !prev);
   };
-
-  console.log(isOwner, "true or false")
 
   const OrderIcon = () => {
     return (
@@ -83,13 +81,16 @@ const Header = () => {
         </div>
         {/* button & profile */}
         <div className="flex flex-1 items-center sm:justify-end gap-x-4 sm:gap-x-8">
-        <div> 
-          {isOwner && (
-            <button
-            onClick={() => navigate('/owner')}
-            className='btn-light ring-1 ring-slate-900/5 py-1 text-xs font-semibold'>Dashboard</button>
-          )}
-        </div>
+          <div>
+            {isOwner && (
+              <button
+                onClick={() => navigate("/owner")}
+                className="btn-light ring-1 ring-slate-900/5 py-1 text-xs font-semibold"
+              >
+                Dashboard
+              </button>
+            )}
+          </div>
           {/* Menu Toggle */}
           <div className=" relative lg:hidden w-7 h-6">
             <img
