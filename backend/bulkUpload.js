@@ -32,7 +32,7 @@ const dummyProducts = [
   {
     _id: "2",
     title: "Vegetarian Chickpea Curry",
-    images: [`product_2.png`],
+    images: ["product_2.png"],
     price: { H: 10, F: 20 },
     description:
       "Our Vegetarian Chickpea Curry is a hearty dish made with tender chickpeas simmered in a rich tomato-based sauce.",
@@ -671,7 +671,7 @@ const dummyProducts = [
   {
     _id: "47",
     title: "Ripe Banana Bunch",
-    images: [`product_47.png`],
+    images: ["product_47.png"],
     price: { H: 15, F: 20 },
     description:
       "Our Ripe Banana Bunch is perfect for a quick snack or a healthy addition to your meals.",
@@ -710,13 +710,13 @@ async function bulkUpload() {
     await mongoose.connect(`${process.env.MONGO_URI}/NusaRasa`);
 
     for (const prod of dummyProducts) {
-      const imageUrl = await Promise.all(
+      const imagesUrl = await Promise.all(
         prod.images.map(async (fileName) => {
           const filePath = path.join(__dirname, "images", fileName);
           const result = await cloudinary.uploader.upload(filePath, {
             resource_type: "image",
           });
-          return result.resource_type;
+          return result.secure_url;
         })
       );
       // create in db
@@ -725,7 +725,7 @@ async function bulkUpload() {
         description: prod.description,
         price: prod.price,
         sizes: prod.sizes,
-        images: prod.images,
+        images: imagesUrl,
         category: prod.category,
         type: prod.type,
         popular: prod.popular,
