@@ -6,6 +6,8 @@ const ListProduct = () => {
   const { products, currency, fetchProducts, axios, getToken } =
     useAppContext();
 
+  console.log(products);
+
   const toggleStock = async (productId, inStock) => {
     try {
       const { data } = await axios.post(
@@ -46,7 +48,7 @@ const ListProduct = () => {
             <img
               src={product.images[0]}
               className="w-12 bg-primary rounded"
-              alt=""
+              alt={product.images[0]}
             />
             <h5 className=" text-sm font-semibold line-clamp-2">
               {product.title}
