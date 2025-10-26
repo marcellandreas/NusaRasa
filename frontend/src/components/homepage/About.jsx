@@ -1,0 +1,82 @@
+import React from "react";
+import Title from "../ui/Title";
+import { assets } from "../../assets/data";
+
+const About = () => {
+  return (
+    <section className=" max-padd-container py-12 xl:py-24">
+      {/* container */}
+      <div className=" flexCenter flex-col gap-16 xl:gap-8 xl:flex-row">
+        {/* left side */}
+        <div className=" flex-1">
+          <Title
+            title1={"Discover Our"}
+            title2={"Food app's key features!"}
+            titleStyles={"pb-10 items-start"}
+            paraStyles={"text-start"}
+          />
+          <div className=" flex flex-col items-start gap-y-4">
+            <div className="flexCenter gap-x-4">
+              <div className=" h-16 min-w-16 bg-solid flexCenter rounded-md">
+                <img
+                  src={assets.delivery}
+                  alt=""
+                  width={32}
+                  className=" invert"
+                />
+              </div>
+              <div>
+                <h4>Fast Food Devivery</h4>
+                <p>
+                  Get your favorite meals delivered hot and fresh to your door
+                  in just a few minutes.
+                </p>
+              </div>
+            </div>
+            <div className="flexCenter gap-x-4">
+              <div className=" h-16 min-w-16 bg-solid flexCenter rounded-md">
+                <img
+                  src={assets.secure}
+                  alt=""
+                  width={32}
+                  className=" invert"
+                />
+              </div>
+              <div>
+                <h4>Secure Online Payments</h4>
+                <p>
+                  Pay securely using your preferred payment methods with a
+                  simple and quick checkout.
+                </p>
+              </div>
+            </div>
+            <div className="flexCenter gap-x-4">
+              <div className=" h-16 min-w-16 bg-solid flexCenter rounded-md">
+                <img src={assets.phone} alt="" width={32} className=" invert" />
+              </div>
+              <div>
+                <h4>24/7 Order Support</h4>
+                <p>
+                  Our support team is always ready to assist you with any order
+                  queries or issues.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* right side */}
+        <div className=" flex-1 flexCenter gap-5">
+          <div className=" flex-1">
+            <img src={assets.features1} alt="" className=" rounded-3xl" />
+          </div>
+          <div className=" flex-1 flex gap-5 flex-col">
+            <img src={assets.features3} alt="" className=" rounded-3xl" />
+            <img src={assets.features2} alt="" className=" rounded-3xl" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default About;
