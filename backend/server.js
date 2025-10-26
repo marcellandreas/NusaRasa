@@ -12,6 +12,7 @@ import productRouter from "./routes/productRoute.js";
 import addressRouter from "./routes/addressRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import { stripeWebhooks } from "./controllers/StripeWebhooks.js";
 
 const port = process.env.PORT || 3000;
 
@@ -20,6 +21,13 @@ await connectCloudinary();
 
 const app = express();
 app.use(cors());
+
+// api to listen to stripe webhooks
+app.post(
+  "/api/stripe",
+  express.raw({ type: "application/json" }),
+  stripeWebhooks
+);
 
 // middleware setup
 app.use(express.json());

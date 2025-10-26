@@ -15,6 +15,7 @@ import SideBar from "./components/owner/SideBar";
 import Dashboard from "./pages/admin/Dashboard";
 import ListProduct from "./pages/admin/ListProduct";
 import AddProduct from "./pages/admin/AddProduct";
+import Processing from "./pages/Processing";
 
 const App = () => {
   const isOwnerPath = useLocation().pathname.includes("owner");
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/address-form" element={<AddressForm />} />
         <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/processing/:nextUrl" element={<Processing />} />
         <Route path="/owner" element={<SideBar />}>
           <Route index element={<Dashboard />} />
           <Route path="/owner/add-product" element={<AddProduct />} />

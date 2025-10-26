@@ -12,7 +12,9 @@ export const AppContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [cartItems, setCartItems] = useState({});
-  const [method, SetMethod] = useState("COD");
+  const [method, setMethod] = useState("COD");
+
+  console.log(method, "sekarang apa ?");
 
   const [isOwner, setIsOwner] = useState(false);
 
@@ -161,7 +163,7 @@ export const AppContextProvider = ({ children }) => {
     cartItems,
     getCartAmount,
     method,
-    SetMethod,
+    setMethod,
     isOwner,
     setIsOwner,
     axios,

@@ -2,7 +2,7 @@ import transporter from "../middleware/nodeMailer.js";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import User from "../models/User.js";
-import Stripe from "stripe";
+import stripe from "stripe";
 
 // global variabels for payment
 const currency = "usd";
@@ -45,7 +45,6 @@ export const placeOrderCOD = async (req, res) => {
     }
 
     // calculate total amount by adding tax and delivery charges
-
     const taxAmount = subtotal * taxPercentage;
     const totalAmount = subtotal + taxAmount + delivery_charges;
 
@@ -111,9 +110,110 @@ export const placeOrderCOD = async (req, res) => {
 // PLACE ORDER USING Stripe [POST '/stripe']
 export const placeOrderStripe = async (req, res) => {
   try {
-    res.json({ success: true, message: "Order placed" });
+    const { items, address } = req.body;
+    const { userId } = req.auth();
+    const { origin } = req.headers;
+
+    if (!items || items.length === 0) {
+      return res.json({
+        success: false,
+        message: "Please add Products first yaa!!!",
+      });
+    }
+
+    // calculate amount using items
+    let subtotal = 0;
+    let productData = [];
+
+    // calculate subtotal and prepare productData
+    for (const item of items) {
+      const product = await Product.findById(item.product);
+      if (!product) {
+        return res.json({
+          success: false,
+          message: "Product not found",
+        });
+      }
+
+      const unitPrice = product.price[item.size]; // pick correct size
+      if (!unitPrice) {
+        return res.json({
+          success: false,
+          message: "Invalid size selected",
+        });
+      }
+
+      subtotal += unitPrice * item.quantity;
+
+      productData.push({
+        name: product.title,
+        price: unitPrice,
+        quantity: item.quantity,
+      });
+    }
+
+    // calculate total amount by adding tax and delivery charges
+    const taxAmount = subtotal * taxPercentage;
+    const totalAmount = subtotal + taxAmount + delivery_charges;
+
+    // create order in db
+    const order = await Order.create({
+      userId,
+      items,
+      amount: totalAmount,
+      address,
+      paymentMethod: "stripe",
+    });
+
+    const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
+
+    // stripe line items
+    let line_items = productData.map((item) => ({
+      price_data: {
+        currency: currency,
+        product_data: {
+          name: item.name,
+        },
+        unit_amount: Math.round(item.price * 100),
+      },
+      quantity: item.quantity,
+    }));
+
+    // Tax
+    line_items.push({
+      price_data: {
+        currency,
+        product_data: { name: "Tax (2%)" },
+        unit_amount: Math.round(taxAmount * 100),
+      },
+      quantity: 1,
+    });
+
+    // Delivery charges
+    line_items.push({
+      price_data: {
+        currency,
+        product_data: { name: "Delivery  Charges (2%)" },
+        unit_amount: Math.round(delivery_charges * 100),
+      },
+      quantity: 1,
+    });
+
+    //create stripe checkout session
+    const session = await stripeInstance.checkout.sessions.create({
+      line_items,
+      mode: "payment",
+      success_url: `${origin}/processing/my-orders`,
+      cancel_url: `${origin}/cart`,
+      metadata: {
+        orderId: order._id.toString(),
+        userId,
+      },
+    });
+
+    return res.json({ success: true, url: session.url });
   } catch (error) {
-    console.log(error.message);
+    console.log("Stripe Error", error.message);
     res.json({ success: false, message: error.message });
   }
 };

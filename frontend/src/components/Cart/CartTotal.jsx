@@ -19,6 +19,8 @@ const CartTotal = () => {
     getToken,
   } = useAppContext();
 
+  console.log("cart total", method);
+
   const [addresses, SetAddresses] = useState([]);
 
   const [showAddress, SetShowAddress] = useState(false);
@@ -85,6 +87,19 @@ const CartTotal = () => {
           if (data.addresses.length > 0) {
             setSelectedAddress(data.addresses[0]);
           }
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        const { data } = await axios.post(
+          "/api/orders/stripe",
+          { items, address: selectedAddress._id },
+          {
+            headers: { Authorization: `Bearer ${await getToken()}` },
+          }
+        );
+        if (data.success) {
+          window.location.replace(data.url);
         } else {
           toast.error(data.message);
         }
