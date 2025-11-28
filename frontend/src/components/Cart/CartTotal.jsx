@@ -22,7 +22,6 @@ const CartTotal = () => {
   console.log("cart total", method);
 
   const [addresses, SetAddresses] = useState([]);
-
   const [showAddress, SetShowAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
 
