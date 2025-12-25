@@ -8,12 +8,12 @@ const Contact = () => {
         <p className="text-xs bg-black/80 text-white font-medium px-3 py-1 rounded-full">
           Contact Us
         </p>
-        <h1 className="text-4xl font-bold py-4 text-center">
-          Let’s <span className=" text-solidTwo">Get In Touch.</span>
+        <h1 className="text-4xl font-bold py-4 text-center text-accent">
+          Let's <span className="text-accent-soft">Get In Touch.</span>
         </h1>
-        <p className="max-md:text-sm text-gray-500 pb-10 text-center">
+        <p className="max-md:text-sm text-accent-dim pb-10 text-center">
           Or just reach out manually to us at{" "}
-          <a href="#" className="text-solid hover:underline">
+          <a href="#" className="text-accent hover:underline">
             hello@nusarasa.com
           </a>
         </p>
@@ -22,8 +22,8 @@ const Contact = () => {
           <label htmlFor="name" className="font-medium">
             Full Name
           </label>
-          <div className="flex items-center mt-2 mb-4 h-10 pl-3 border border-slate-300 bg-solid/10 rounded-full focus-within:ring-2 focus-within:ring-black/80 transition-all overflow-hidden">
-            <img src={assets.user} alt="" w={19} className=" invert-50" />
+          <div className="flex items-center mt-2 mb-4 h-10 pl-3 border border-accent-dim/30 bg-surface rounded-full focus-within:ring-2 focus-within:ring-accent/50 transition-all overflow-hidden">
+            <img src={assets.user} alt="" w={19} className="opacity-60" />
 
             <input
               type="text"
@@ -36,8 +36,8 @@ const Contact = () => {
           <label htmlFor="email-address" className="font-medium mt-4">
             Email Address
           </label>
-          <div className="flex items-center mt-2 mb-4 h-10 pl-3 border border-slate-300 bg-solid/10 rounded-full focus-within:ring-2 focus-within:ring-black/80 transition-all overflow-hidden">
-            <img src={assets.mail} alt="" w={19} className=" invert-50" />
+          <div className="flex items-center mt-2 mb-4 h-10 pl-3 border border-accent-dim/30 bg-surface rounded-full focus-within:ring-2 focus-within:ring-accent/50 transition-all overflow-hidden">
+            <img src={assets.mail} alt="" w={19} className="opacity-60" />
             <input
               type="email"
               className="h-full px-2 w-full outline-none bg-transparent"
@@ -51,17 +51,17 @@ const Contact = () => {
           </label>
           <textarea
             rows="4"
-            className="w-full mt-2 p-2  border border-slate-300 bg-solid/10 rounded-lg resize-none outline-none focus:ring-2 focus-within:ring-black/80 transition-all"
+            className="w-full mt-2 p-2 border border-accent-dim/30 bg-surface rounded-lg resize-none outline-none focus:ring-2 focus-within:ring-accent/50 transition-all text-accent"
             placeholder="Enter your message"
             required
           ></textarea>
 
           <button
             type="submit"
-            className="flexCenter gap-1 mt-5 btn-solid w-full !font-bold "
+            className="flexCenter gap-1 mt-5 btn-primary w-full !font-bold"
           >
             Submit Form
-            <img src={assets.right} alt="" w={19} className=" invert" />
+            <img src={assets.right} alt="" w={19} className="invert" />
           </button>
         </div>
       </form>

@@ -61,9 +61,10 @@ function AddressForm() {
           className="flex flex-[2] flex-col gap-3 text-[95%]"
         >
           <Title
-            title1={"Delivery"}
-            title2={"Information"}
-            titleStyles={"pb-5"}
+            title1="Shipping"
+            title2="Delivery Information"
+            titleStyles="pb-5"
+            paraStyles="hidden"
           />
           <div className="flex gap-3">
             <input
@@ -143,7 +144,7 @@ function AddressForm() {
               className="ring-1 ring-slate-900/15 p-1 pl-3 rounded-sm bg-white outline-none w-1/2"
             />
           </div>
-          <button type="submit" className=" btn-solid rounded-md w-1/2 mt-2">
+          <button type="submit" className="btn-primary rounded-md w-1/2 mt-2">
             Add Address
           </button>
         </form>

@@ -44,7 +44,7 @@ const SideBar = () => {
                     <span className=" hidden sm:block font-extrabold text-3xl relative top-1 left-1">
                       Nusa
                     </span>
-                    <span className=" hidden sm:block font-extrabold text-xs relative left-1.5 tracking-[10px] uppercase text-solid">
+                    <span className="hidden sm:block font-extrabold text-xs relative left-1.5 tracking-[10px] uppercase text-accent-soft">
                       Rasa
                     </span>
                   </div>
@@ -79,7 +79,7 @@ const SideBar = () => {
                   end={link.path === "/owner"}
                   className={({ isActive }) =>
                     isActive
-                      ? "flexStart gap-x-2 p-5 lg:pl-12 text-[13px] font-bold sm:!text-sm cursor-pointer h-10 bg-solid/10 max-md:border-b-4 md:border-r-4 border-solidOne"
+                      ? "flexStart gap-x-2 p-5 lg:pl-12 text-[13px] font-bold sm:!text-sm cursor-pointer h-10 bg-surface max-md:border-b-4 md:border-r-4 border-accent"
                       : "flexStart gap-x-2 p-5 lg:pl-12 text-[13px] font-bold sm:!text-sm cursor-pointer h-10 rounded-xl"
                   }
                 >

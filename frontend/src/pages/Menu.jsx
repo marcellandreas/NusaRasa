@@ -187,8 +187,8 @@ const Menu = () => {
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((prev) => prev - 1)}
-              className={` btn-solid !py-1 !px-3 ${
-                currentPage === 1 && " opacity-50 cursor-not-allowed"
+              className={`btn-primary !py-1 !px-3 ${
+                currentPage === 1 && "opacity-50 cursor-not-allowed"
               }`}
             >
               Previous
@@ -197,8 +197,8 @@ const Menu = () => {
               <button
                 key={index + 1}
                 onClick={() => setCurrentPage(index + 1)}
-                className={` btn-light !py-1 !px-3 ${
-                  currentPage === index + 1 && " bg-solidTwo text-primary"
+                className={`btn-outline !py-1 !px-3 ${
+                  currentPage === index + 1 && "!bg-accent !text-primary"
                 }`}
               >
                 {index + 1}
@@ -207,8 +207,8 @@ const Menu = () => {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((prev) => prev + 1)}
-              className={` btn-light !py-1 !px-3 ${
-                currentPage === totalPages && " opacity-50 cursor-not-allowed"
+              className={`btn-outline !py-1 !px-3 ${
+                currentPage === totalPages && "opacity-50 cursor-not-allowed"
               }`}
             >
               Next

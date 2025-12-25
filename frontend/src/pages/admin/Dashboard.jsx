@@ -59,7 +59,7 @@ const Dashboard = () => {
           <img src={assets.graph} alt="" className=" hidden sm:flex w-8" />
           <div>
             <h4>{dashboardData?.totalOrders?.toString().padStart(2, "0")}</h4>
-            <h5 className=" text-solid">Total Sales</h5>
+            <h5 className="text-tertiary">Total Sales</h5>
           </div>
         </div>
         <div className="flexStart gap-7 p-5 bg-[#fff4d2] lg:min-w-56 rounded-xl">
@@ -69,7 +69,7 @@ const Dashboard = () => {
               {currency}
               {dashboardData?.totalRevenue?.toFixed(2) || 0}
             </h4>
-            <h5 className=" text-solid">Total Earning</h5>
+            <h5 className="text-tertiary">Total Earning</h5>
           </div>
         </div>
       </div>

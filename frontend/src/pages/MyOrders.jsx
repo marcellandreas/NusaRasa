@@ -39,10 +39,10 @@ const MyOrders = () => {
   return (
     <div className="max-padd-container py-16 pt-28 bg-primary">
       <Title
-        title1={"My"}
-        title2={"Orders List"}
-        titleStyles={"pb-5"}
-        paraStyles={"hidden"}
+        title1="Order History"
+        title2="My Orders"
+        titleStyles="pb-5"
+        paraStyles="hidden"
       />
       {orders.map((order) => (
         <div key={order._id} className=" bg-white p-2 mt-3 rounded-2xl">
@@ -134,7 +134,7 @@ const MyOrders = () => {
               </div>
               <button
                 onClick={loadOrderData}
-                className=" btn-solid !py-1 !text-xs rounded-sm"
+                className="btn-primary !py-1 !text-xs rounded-sm"
               >
                 Track Order
               </button>

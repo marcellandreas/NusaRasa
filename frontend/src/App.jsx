@@ -20,7 +20,7 @@ import Processing from "./pages/Processing";
 const App = () => {
   const isOwnerPath = useLocation().pathname.includes("owner");
   return (
-    <main className=" overflow-x-hidden text-textColor">
+    <main className="overflow-x-hidden text-textColor noise-overlay">
       {!isOwnerPath && <Header />}
       <Toaster position="bottom-right" />
       <Routes>

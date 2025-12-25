@@ -118,7 +118,7 @@ const CartTotal = () => {
     <div>
       <h3>
         Order Details
-        <span className=" text-sm font-bold text-solid">
+        <span className="text-sm font-bold text-accent-soft ml-2">
           {getCartCount()} Items
         </span>
       </h3>
@@ -135,7 +135,7 @@ const CartTotal = () => {
             </p>
             <button
               onClick={() => SetShowAddress(!showAddress)}
-              className=" text-solid text-sm font-medium hover:underline cursor-pointer"
+              className="text-accent text-sm font-medium hover:underline cursor-pointer"
             >
               change
             </button>
@@ -170,23 +170,23 @@ const CartTotal = () => {
         <hr className="border-gray-300 mt-5" />
         <div className="my-6">
           <h4 className="mb-5">Payment Method</h4>
-          <div className=" flex gap-3">
-            <div
+          <div className="flex gap-3">
+            <button
               onClick={() => setMethod("COD")}
               className={`${
-                method === "COD" ? "btn-solid" : "btn-light"
-              } !py-2 text-xs cursor-pointer`}
+                method === "COD" ? "btn-primary" : "btn-outline"
+              } !py-2 !px-4 text-xs cursor-pointer`}
             >
               Cash on Delivery
-            </div>
-            <div
+            </button>
+            <button
               onClick={() => setMethod("stripe")}
               className={`${
-                method === "stripe" ? "btn-solid" : "btn-light"
-              } !py-2 text-xs cursor-pointer`}
+                method === "stripe" ? "btn-primary" : "btn-outline"
+              } !py-2 !px-4 text-xs cursor-pointer`}
             >
               Stripe
-            </div>
+            </button>
           </div>
         </div>
         <hr className="border-gray-300 mt-5" />
@@ -227,7 +227,7 @@ const CartTotal = () => {
       </div>
       <button
         onClick={placeOrder}
-        className=" btn-solid w-full mt-8 !rounded-md py-2"
+        className="btn-primary w-full mt-8 !rounded-md py-2"
       >
         Proceed to orders
       </button>

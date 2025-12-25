@@ -42,7 +42,7 @@ const Blog = () => {
                 </div>
 
                 <div className="sm:flex sm:items-end sm:justify-end">
-                  <a href="#" className="btn-solid rounded-none">
+                  <a href="#" className="btn-primary rounded-none">
                     Read Blog
                   </a>
                 </div>

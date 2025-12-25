@@ -30,7 +30,7 @@ const ListProduct = () => {
   return (
     <div className="md:px-8 py-6 xl:py-8 m-1.5 sm:m-3 h-[97vh] overflow-y-scroll w-full lg:w-11/12 bg-primary shadow rounded-xl">
       <div className=" flex flex-col gap-2 lg:w-11/12">
-        <div className="grid grid-cols-[1.5fr_3.5fr_2fr_1.5fr_1fr] items-center py-4 px-2 bg-solid text-white bold-14 sm:bold-15 mb-1 rounded-xl">
+        <div className="grid grid-cols-[1.5fr_3.5fr_2fr_1.5fr_1fr] items-center py-4 px-2 bg-tertiary text-accent bold-14 sm:bold-15 mb-1 rounded-xl">
           <h5>Images</h5>
           <h5>Title</h5>
           <h5>Category</h5>
@@ -64,7 +64,7 @@ const ListProduct = () => {
                   className=" sr-only peer"
                   defaultChecked={product.inStock}
                 />
-                <div className=" w-10 h-6 bg-slate-300 rounded-full peer peer-checked:bg-solid transition-colors duration-200" />
+                <div className="w-10 h-6 bg-surface rounded-full peer peer-checked:bg-accent transition-colors duration-200" />
                 <span className=" absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-4" />
               </label>
             </div>

@@ -255,7 +255,7 @@ const AddProduct = () => {
             <button
               onClick={addPrizeAdd}
               type="button"
-              className=" btn-solid font-semibold pb-1.5 rounded-lg flexCenter"
+              className="btn-primary font-semibold pb-1.5 rounded-lg flexCenter"
             >
               Add
             </button>
@@ -325,7 +325,7 @@ const AddProduct = () => {
         <button
           type="submit"
           disabled={loading}
-          className=" btn-solid font-semibold mt-3 p-2 max-w-36 sm:w-full rounded-xl"
+          className="btn-primary font-semibold mt-3 p-2 max-w-36 sm:w-full rounded-xl"
         >
           {loading ? "Adding" : "Add Product"}
         </button>

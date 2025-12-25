@@ -44,10 +44,10 @@ const Cart = () => {
         {/* left side */}
         <div className=" flex flex-[2] flex-col gap-3 text-[95%]">
           <Title
-            title1={"Cart"}
-            title2={"Overview"}
-            titleStyles={"pb-5 items-start"}
-            paraStyles={"hidden"}
+            title1="Shopping"
+            title2="Your Cart"
+            titleStyles="pb-5 items-start"
+            paraStyles="hidden"
           />
           <div className="grid grid-cols-[6fr_2fr_1fr] font-medium bg-white p-2 rounded-xl">
             <h5 className="text-left ">Products Detail</h5>
@@ -78,19 +78,18 @@ const Cart = () => {
                     <div className="flexBetween">
                       <div className="flex items-center ring-1 ring-slate-900/15 rounded-full overflow-hidden bg-primary">
                         <button
-                          className="p-1.5 bg-solid text-white rounded-full shadow-md cursor-pointer m-0.5"
+                          className="p-1.5 bg-accent text-primary rounded-full shadow-md cursor-pointer m-0.5"
                           onClick={() => decrement(item._id, item.size)}
                         >
                           <img
                             src={assets.minus}
                             alt=""
                             width={11}
-                            className=" invert"
                           />
                         </button>
                         <p className="px-2">{quantity}</p>
                         <button
-                          className="p-1.5 bg-solid text-white rounded-full shadow-md cursor-pointer m-0.5"
+                          className="p-1.5 bg-accent text-primary rounded-full shadow-md cursor-pointer m-0.5"
                           onClick={() => increment(item._id, item.size)}
                         >
                           <img
